@@ -1,39 +1,25 @@
 require('./config/config');
+
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
 const bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-app.get('/usuarios', function(req, res) {
-    res.json('get usuarios')
-});
+app.use(require('./controllers/usuariosController'));
 
-app.post("/usuarios", function(req, res) {
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        res.status(400).json({
-
-        });
+mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (err, res) => {
+    if (err) {
+        throw err;
     } else {
-        res.json({
-            body
-        })
+        console.log("Base de datos online");
     }
-});
-
-app.put("/usuarios/:id", function(req, res) {
-    let id = req.params.id;
-    res.json('put usuarios' + id)
-});
-
-app.delete("/usuarios", function(req, res) {
-    res.json('delete usuarios')
 });
 
 app.listen(process.env.PORT, () => {
