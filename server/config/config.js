@@ -7,6 +7,12 @@ process.env.PORT = process.env.PORT || 3000;
 // Entorno
 //========
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+//========
+// Token data
+//========
+process.env.CADUCIDAD_TOKEN = 6000 * 6000
+process.env.SEED = process.env.SEED || 'secret-dev'
+
 
 //========
 // DB
