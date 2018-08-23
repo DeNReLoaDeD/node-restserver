@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.use(require('./controllers/usuariosController'));
 
-mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
     if (err) {
         throw err;
     } else {
