@@ -2,7 +2,7 @@ require('./config/config');
 
 const express = require('express');
 const mongoose = require('mongoose');
-
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 
 //config global controllers
 app.use(require('./controllers/index'));
+
+//habilitar carpeta public
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
     if (err) {
