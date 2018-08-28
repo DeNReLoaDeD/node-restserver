@@ -9,7 +9,9 @@ let verificaToken = (req, res, next) => {
         if (err) {
             return res.status(401).json({
                 ok: false,
-                err
+                err: {
+                    message: 'Invalid token'
+                }
             });
         }
         req.usuario = decode.usuario;
@@ -28,12 +30,29 @@ let verificaRole = (req, res, next) => {
             err: {
                 message: 'El usuario no es un administrador'
             }
-        })
+        });
     }
 
 }
 
+let verificaTokenImg = (req, res, next) => {
+    let token = req.query.token;
+    jwt.verify(token, process.env.SEED, (err, decode) => {
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Invalid token'
+                }
+            });
+        }
+        req.usuario = decode.usuario;
+        next();
+    });
+}
+
 module.exports = {
     verificaToken,
-    verificaRole
+    verificaRole,
+    verificaTokenImg
 }
